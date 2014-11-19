@@ -13,12 +13,11 @@ import lejos.robotics.RegulatedMotor;
 import lejos.utility.Delay;
 
 
-class ColorSorter {
+class AdancedColorSorter {
 
 	private static RegulatedMotor bigMotor;
 	private static RegulatedMotor smallMotor;
 	private static int currentPosition;
-	private static int[] items;
 
 	public static void main(String[] args) {
 
@@ -30,68 +29,58 @@ class ColorSorter {
 		bigMotor.setSpeed(200);
 		currentPosition = 0;
 
-		items = new int[8];
-		for (int i : items) {
-			items[i] = -1;
-		}
-
 		// get a port instance
 		Port port = LocalEV3.get().getPort("S2");
 
 		// Get an instance of the EV3 sensor
 		EV3ColorSensor sensor = new EV3ColorSensor(port);
 
-		LCD.drawString("Next plz. Or press Enter.", 0, 4);
-
-		int count = 0;
-		while (count < 8) {
+		LCD.drawString("Press Enter to start", 0, 4);
+		
+		// Press Enter to Start
+		while(Button.ENTER.isUp()){
+			if(Button.ESCAPE.isDown()){
+				return;
+			}
+		}
+		
+		LCD.clear();
+		
+		boolean stack_full=true;
+		while (stack_full) {
 
 			switch (sensor.getColorID()) {
 			case Color.BLUE:
-				items[count] = 0;
-				count++;
-				waitAndShow("Blue");
+				LCD.drawString("Blue", 0, 4);
+				deploy(0);
 				break;
 
 			case Color.GREEN:
-				items[count] = 1;
-				count++;
-				waitAndShow("Green");
+				LCD.drawString("Green", 0, 4);
+				deploy(1);
 				break;
 
 			case Color.YELLOW:
-				items[count] = 2;
-				count++;
-				waitAndShow("Yellow");
+				LCD.drawString("Yellow", 0, 4);
+				deploy(2);
 				break;
 
 			case Color.RED:
-				items[count] = 3;
-				count++;
-				waitAndShow("Red");
+				LCD.drawString("Red", 0, 4);
+				deploy(3);
 				break;
+			
 			default:
-
-			}
-
-			if (Button.ENTER.isDown()) {
-				// Go with < 8 items
+				// Stack should be empty here
+				// Back to start
+				LCD.drawString("Stack is empty", 0, 4);
+				driveTo(0);
+				stack_full = false;
 				break;
 			}
+			
 
 		}
-
-		for (int p : items) {
-
-			if (p != -1) {
-				deploy(p);
-				count--;
-			}
-
-		}
-
-		// Back To Start
-		driveTo(0);
 
 		// Cleanup
 		smallMotor.close();
@@ -108,15 +97,6 @@ class ColorSorter {
 
 	}
 
-	private static void waitAndShow(String s) {
-
-		LCD.clear();
-		LCD.drawString(s, 0, 4);
-		Delay.msDelay(3000);
-		LCD.clear();
-		LCD.drawString("Next plz. Or press Enter.", 0, 4);
-	}
-
 	private static void popOut() {
 
 		// Change in the original schematics:
@@ -126,11 +106,11 @@ class ColorSorter {
 		smallMotor.rotate(-180);
 		Delay.msDelay(200);
 		smallMotor.rotate(180);
+		Delay.msDelay(300);
 	}
 	
 	private static void deploy(int pos){
 		driveTo(pos);
 		popOut();
 	}
-
 }
