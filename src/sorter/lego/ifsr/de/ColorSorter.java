@@ -31,7 +31,7 @@ class ColorSorter {
 		currentPosition = 0;
 
 		items = new int[8];
-		for (int i : items) {
+		for (int i=0;i<8;i++) {
 			items[i] = -1;
 		}
 
