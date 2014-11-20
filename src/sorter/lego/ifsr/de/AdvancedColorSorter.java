@@ -106,7 +106,22 @@ class AdancedColorSorter {
 		smallMotor.rotate(-180);
 		Delay.msDelay(200);
 		smallMotor.rotate(180);
-		Delay.msDelay(300);
+		Delay.msDelay(100);
+		
+		// Shake the push-part back in place
+		
+		switch(currentPosition){
+		case 0:
+			driveTo(1);
+			break;
+		case 3:
+			driveTo(2);
+			break;
+		default: 
+			driveTo(currentPosition+1);
+			break;
+		}
+		
 	}
 	
 	private static void deploy(int pos){
