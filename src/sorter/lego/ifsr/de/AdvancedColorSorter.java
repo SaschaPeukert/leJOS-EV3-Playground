@@ -51,21 +51,25 @@ class AdancedColorSorter {
 
 			switch (sensor.getColorID()) {
 			case Color.BLUE:
+				LCD.clear();
 				LCD.drawString("Blue", 0, 4);
 				deploy(0);
 				break;
 
 			case Color.GREEN:
+				LCD.clear();
 				LCD.drawString("Green", 0, 4);
 				deploy(1);
 				break;
 
 			case Color.YELLOW:
+				LCD.clear();
 				LCD.drawString("Yellow", 0, 4);
 				deploy(2);
 				break;
 
 			case Color.RED:
+				LCD.clear();
 				LCD.drawString("Red", 0, 4);
 				deploy(3);
 				break;
@@ -73,6 +77,7 @@ class AdancedColorSorter {
 			default:
 				// Stack should be empty here
 				// Back to start
+				LCD.clear();
 				LCD.drawString("Stack is empty", 0, 4);
 				driveTo(0);
 				stack_full = false;
@@ -81,8 +86,8 @@ class AdancedColorSorter {
 			
 
 		}
-
 		// Cleanup
+		LCD.clear();
 		smallMotor.close();
 		bigMotor.close();
 		sensor.close();
