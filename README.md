@@ -3,7 +3,7 @@ leJOS-EV3-Playground
 
 This is just a playground repository for some leJOS EV3 projects
 <hr>
-#### 1. Install leJOS and prepare the Mindstorms EV3-Brick
+#### 1.1. Install leJOS and prepare the Mindstorms EV3-Brick
 
 Here are some usefull links: 
 
@@ -12,6 +12,13 @@ Here are some usefull links:
 [Detailed Explanation](http://sourceforge.net/p/lejos/wiki/Home/)
 
 [Video-"Tutorial"](https://www.youtube.com/watch?v=6dqgHE8g4is)
+
+#### 1.2. How to use this Repository
+
+This is an Eclipse-Project. If you set up your Eclipse as shown in the links above, you are good to go. Just import the project and run the right class that you need for your specific LEGO-Setup.
+
+Just a litte help: Although a field in the run configuration of the Eclipse "leJOS EV3 Plugin" is labled "Connect to name", it should rather be "Connect to IP" because you have to fill in the correct IP of the EV3-Brick and not the name. To easily find out its IP-address, you can use the EV3Control-Tool.
+
 <hr>
 #### 2. ColorSorter
 
