@@ -1,4 +1,4 @@
-package sorter.lego.ifsr.de;
+package ifsr.lego.sorter.advanced;
 
 import lejos.hardware.Button;
 import lejos.hardware.ev3.LocalEV3;
@@ -18,13 +18,16 @@ class AdancedColorSorter extends Thread {
 	private RegulatedMotor smallMotor;
 	private EV3ColorSensor sensor;
 	private int currentPosition;
-	
-	private boolean interrupt = false;
-	
-	public void main() {
 
-		while (!interrupt) {
-			
+	private boolean interruptCheck = false;
+
+	
+	@Override
+	public void run() {
+		// Do the Sorting
+		
+		while (!interruptCheck) {
+
 			LCD.clear();
 
 			bigMotor = new EV3LargeRegulatedMotor(MotorPort.A);
@@ -83,7 +86,7 @@ class AdancedColorSorter extends Thread {
 					LCD.drawString("Stack is empty", 0, 4);
 					driveTo(0);
 					stack_full = false;
-					
+
 					interrupt();
 					break;
 				}
@@ -133,28 +136,21 @@ class AdancedColorSorter extends Thread {
 		popOut();
 	}
 
-	@Override
-	public void run() {
-		main();
-	}
-
 	public void cleanUp() {
 		LCD.clear();
-		try{
+		try {
 			bigMotor.close();
 			smallMotor.close();
 			sensor.close();
-		}catch(Exception e){
-			
+		} catch (Exception e) {
+
 		}
 	}
 
 	@Override
 	public void interrupt() {
-		lejos.hardware.Sound.beep();
+		interruptCheck = true;
 		cleanUp();
-		interrupt = true;
-
 	}
 
 }

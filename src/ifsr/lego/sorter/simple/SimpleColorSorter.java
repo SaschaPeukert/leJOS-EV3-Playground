@@ -1,4 +1,4 @@
-package sorter.lego.ifsr.de;
+package ifsr.lego.sorter.simple;
 
 import lejos.hardware.Button;
 import lejos.hardware.ev3.LocalEV3;
@@ -13,7 +13,7 @@ import lejos.robotics.RegulatedMotor;
 import lejos.utility.Delay;
 
 
-class ColorSorter {
+class SimpleColorSorter {
 
 	private static RegulatedMotor bigMotor;
 	private static RegulatedMotor smallMotor;
