@@ -12,89 +12,88 @@ import lejos.robotics.Color;
 import lejos.robotics.RegulatedMotor;
 import lejos.utility.Delay;
 
+class AdancedColorSorter extends Thread {
 
-class AdancedColorSorter {
+	private RegulatedMotor bigMotor;
+	private RegulatedMotor smallMotor;
+	private EV3ColorSensor sensor;
+	private int currentPosition;
+	
+	private boolean interrupt = false;
+	
+	public void main() {
 
-	private static RegulatedMotor bigMotor;
-	private static RegulatedMotor smallMotor;
-	private static int currentPosition;
+		while (!interrupt) {
+			
+			LCD.clear();
 
-	public static void main(String[] args) {
+			bigMotor = new EV3LargeRegulatedMotor(MotorPort.A);
+			smallMotor = new EV3MediumRegulatedMotor(MotorPort.B);
+			smallMotor.setSpeed(700);
+			bigMotor.setSpeed(200);
+			currentPosition = 0;
 
-		LCD.clear();
+			// get a port instance
+			Port port = LocalEV3.get().getPort("S2");
 
-		bigMotor = new EV3LargeRegulatedMotor(MotorPort.A);
-		smallMotor = new EV3MediumRegulatedMotor(MotorPort.B);
-		smallMotor.setSpeed(700);
-		bigMotor.setSpeed(200);
-		currentPosition = 0;
+			// Get an instance of the EV3 sensor
+			sensor = new EV3ColorSensor(port);
 
-		// get a port instance
-		Port port = LocalEV3.get().getPort("S2");
+			LCD.drawString("Press Enter to start", 0, 4);
 
-		// Get an instance of the EV3 sensor
-		EV3ColorSensor sensor = new EV3ColorSensor(port);
+			// Press Enter to Start
+			while (Button.ENTER.isUp()) {
+				// Necessary anymore?
+			}
 
-		LCD.drawString("Press Enter to start", 0, 4);
-		
-		// Press Enter to Start
-		while(Button.ENTER.isUp()){
-			if(Button.ESCAPE.isDown()){
-				return;
+			LCD.clear();
+
+			boolean stack_full = true;
+			while (stack_full) {
+
+				switch (sensor.getColorID()) {
+				case Color.BLUE:
+					LCD.clear();
+					LCD.drawString("Blue", 0, 4);
+					deploy(0);
+					break;
+
+				case Color.GREEN:
+					LCD.clear();
+					LCD.drawString("Green", 0, 4);
+					deploy(1);
+					break;
+
+				case Color.YELLOW:
+					LCD.clear();
+					LCD.drawString("Yellow", 0, 4);
+					deploy(2);
+					break;
+
+				case Color.RED:
+					LCD.clear();
+					LCD.drawString("Red", 0, 4);
+					deploy(3);
+					break;
+
+				default:
+					// Stack should be empty here
+					// Back to start
+					LCD.clear();
+					LCD.drawString("Stack is empty", 0, 4);
+					driveTo(0);
+					stack_full = false;
+					
+					interrupt();
+					break;
+				}
+
 			}
 		}
-		
-		LCD.clear();
-		
-		boolean stack_full=true;
-		while (stack_full) {
-
-			switch (sensor.getColorID()) {
-			case Color.BLUE:
-				LCD.clear();
-				LCD.drawString("Blue", 0, 4);
-				deploy(0);
-				break;
-
-			case Color.GREEN:
-				LCD.clear();
-				LCD.drawString("Green", 0, 4);
-				deploy(1);
-				break;
-
-			case Color.YELLOW:
-				LCD.clear();
-				LCD.drawString("Yellow", 0, 4);
-				deploy(2);
-				break;
-
-			case Color.RED:
-				LCD.clear();
-				LCD.drawString("Red", 0, 4);
-				deploy(3);
-				break;
-			
-			default:
-				// Stack should be empty here
-				// Back to start
-				LCD.clear();
-				LCD.drawString("Stack is empty", 0, 4);
-				driveTo(0);
-				stack_full = false;
-				break;
-			}
-			
-
-		}
-		// Cleanup
-		LCD.clear();
-		smallMotor.close();
-		bigMotor.close();
-		sensor.close();
 
 	}
 
-	private static void driveTo(int pos) {
+	private void driveTo(int pos) {
 
 		bigMotor.rotate(180 * (pos - currentPosition));
 		Delay.msDelay(500);
@@ -102,7 +101,7 @@ class AdancedColorSorter {
 
 	}
 
-	private static void popOut() {
+	private void popOut() {
 
 		// Change in the original schematics:
 		// http://robotsquare.com/wp-content/uploads/2013/10/45544_colorsorter.pdf
@@ -112,25 +111,50 @@ class AdancedColorSorter {
 		Delay.msDelay(200);
 		smallMotor.rotate(180);
 		Delay.msDelay(100);
-		
+
 		// Shake the push-part back in place
-		
-		switch(currentPosition){
+
+		switch (currentPosition) {
 		case 0:
 			driveTo(1);
 			break;
 		case 3:
 			driveTo(2);
 			break;
-		default: 
-			driveTo(currentPosition+1);
+		default:
+			driveTo(currentPosition + 1);
 			break;
 		}
-		
+
 	}
-	
-	private static void deploy(int pos){
+
+	private void deploy(int pos) {
 		driveTo(pos);
 		popOut();
 	}
+
+	@Override
+	public void run() {
+		main();
+	}
+
+	public void cleanUp() {
+		LCD.clear();
+		try{
+			bigMotor.close();
+			smallMotor.close();
+			sensor.close();
+		}catch(Exception e){
+			
+		}
+	}
+
+	@Override
+	public void interrupt() {
+		lejos.hardware.Sound.beep();
+		cleanUp();
+		interrupt = true;
+
+	}
+
 }
