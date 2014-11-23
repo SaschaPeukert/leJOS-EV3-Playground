@@ -23,6 +23,9 @@ Just a litte help: Although a field in the run configuration of the Eclipse "leJ
 #### 2. ColorSorter
 
 <img	src=http://www.masc2279.com/how-tos/projects/machine/45544_colorsorter/files/45544_colorsorter.png width="50%" height="50%" />
+
+[Building Instructions](http://robotsquare.com/2013/10/01/education-ev3-45544-instruction/)
+
 <hr>
 ### 3. Advanced ColorSorter
 
