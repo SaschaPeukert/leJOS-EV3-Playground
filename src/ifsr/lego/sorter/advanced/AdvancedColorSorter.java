@@ -12,7 +12,7 @@ import lejos.robotics.Color;
 import lejos.robotics.RegulatedMotor;
 import lejos.utility.Delay;
 
-class AdancedColorSorter extends Thread {
+class AdvancedColorSorter extends Thread {
 
 	private RegulatedMotor bigMotor;
 	private RegulatedMotor smallMotor;
@@ -20,7 +20,12 @@ class AdancedColorSorter extends Thread {
 	private int currentPosition;
 
 	private boolean interruptCheck = false;
-
+	
+	public AdvancedColorSorter(RegulatedMotor big, RegulatedMotor small, EV3ColorSensor sens){
+		this.bigMotor = big;
+		this.smallMotor = small;
+		this.sensor = sens;
+	}
 	
 	@Override
 	public void run() {
@@ -30,18 +35,8 @@ class AdancedColorSorter extends Thread {
 
 			LCD.clear();
 
-			bigMotor = new EV3LargeRegulatedMotor(MotorPort.A);
-			smallMotor = new EV3MediumRegulatedMotor(MotorPort.B);
-			smallMotor.setSpeed(700);
-			bigMotor.setSpeed(200);
 			currentPosition = 0;
-
-			// get a port instance
-			Port port = LocalEV3.get().getPort("S2");
-
-			// Get an instance of the EV3 sensor
-			sensor = new EV3ColorSensor(port);
-
+			
 			LCD.drawString("Press Enter to start", 0, 4);
 
 			// Press Enter to Start
@@ -136,21 +131,10 @@ class AdancedColorSorter extends Thread {
 		popOut();
 	}
 
-	public void cleanUp() {
-		LCD.clear();
-		try {
-			bigMotor.close();
-			smallMotor.close();
-			sensor.close();
-		} catch (Exception e) {
-
-		}
-	}
 
 	@Override
 	public void interrupt() {
 		interruptCheck = true;
-		cleanUp();
 	}
 
 }
