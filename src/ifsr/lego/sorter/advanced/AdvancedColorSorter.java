@@ -135,6 +135,10 @@ class AdvancedColorSorter extends Thread {
 	@Override
 	public void interrupt() {
 		interruptCheck = true;
+		bigMotor.stop();
+		smallMotor.stop();
+		//Delay.msDelay(1000);
+		this.stop();
 	}
 
 }
