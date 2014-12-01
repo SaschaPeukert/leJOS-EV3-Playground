@@ -15,9 +15,7 @@ import lego.sorter.advanced.AdvancedColorSorter;
 
 
 /**
- * 
  * The main class to run for project-setup 2.3
- * 
  */
 public class SortingStarter {
 	

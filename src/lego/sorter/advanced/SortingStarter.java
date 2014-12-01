@@ -10,6 +10,10 @@ import lejos.hardware.port.Port;
 import lejos.hardware.sensor.EV3ColorSensor;
 import lejos.robotics.RegulatedMotor;
 
+/**
+ * The main class to run for project-setup 2.2
+ */
+
 public class SortingStarter {
 	
 	private static RegulatedMotor bigMotor;
