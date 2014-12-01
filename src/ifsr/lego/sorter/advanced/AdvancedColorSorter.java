@@ -137,8 +137,12 @@ class AdvancedColorSorter extends Thread {
 		interruptCheck = true;
 		bigMotor.stop();
 		smallMotor.stop();
-		//Delay.msDelay(1000);
-		this.stop();
+		Delay.msDelay(100);
+		try{
+			this.stop();
+		} catch(ThreadDeath e){
+			
+		}
 	}
 
 }
