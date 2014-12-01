@@ -1,4 +1,4 @@
-package ifsr.lego.sorter.advanced;
+package lego.sorter.advanced.waver;
 
 import lejos.hardware.Button;
 import lejos.hardware.ev3.LocalEV3;

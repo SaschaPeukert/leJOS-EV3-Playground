@@ -1,4 +1,4 @@
-package ifsr.lego.sorter.advanced;
+package lego.sorter.advanced.waver;
 
 import lejos.robotics.RegulatedMotor;
 import lejos.utility.Delay;
