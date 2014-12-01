@@ -11,6 +11,9 @@ import lejos.hardware.sensor.EV3ColorSensor;
 import lejos.robotics.RegulatedMotor;
 import lejos.utility.Delay;
 
+import lego.sorter.advanced.AdvancedColorSorter;
+
+
 public class SortingStarter {
 	
 	private static RegulatedMotor bigMotor;

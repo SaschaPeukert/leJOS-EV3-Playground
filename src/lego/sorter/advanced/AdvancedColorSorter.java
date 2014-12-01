@@ -1,13 +1,12 @@
 package lego.sorter.advanced;
 
-import lejos.hardware.Button;
 import lejos.hardware.lcd.LCD;
 import lejos.hardware.sensor.EV3ColorSensor;
 import lejos.robotics.Color;
 import lejos.robotics.RegulatedMotor;
 import lejos.utility.Delay;
 
-class AdvancedColorSorter extends Thread {
+public class AdvancedColorSorter extends Thread {
 
 	private RegulatedMotor bigMotor;
 	private RegulatedMotor smallMotor;
@@ -31,15 +30,6 @@ class AdvancedColorSorter extends Thread {
 			LCD.clear();
 
 			currentPosition = 0;
-			
-			LCD.drawString("Press Enter to start", 0, 4);
-
-			// Press Enter to Start
-			while (Button.ENTER.isUp()) {
-				// Necessary anymore?
-			}
-
-			LCD.clear();
 
 			boolean stack_full = true;
 			while (stack_full) {
