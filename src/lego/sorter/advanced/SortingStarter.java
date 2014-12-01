@@ -23,8 +23,6 @@ public class SortingStarter {
 		smallMotor.setSpeed(700);
 		bigMotor.setSpeed(200);
 		
-		//smallMotor.rotate(180);
-		
 		// get a port instance
 		Port port = LocalEV3.get().getPort("S2");
 		// Get an instance of the EV3 sensor

@@ -12,8 +12,10 @@ import lejos.robotics.Color;
 import lejos.robotics.RegulatedMotor;
 import lejos.utility.Delay;
 
-
-class SimpleColorSorter {
+/**
+ * The main class to run for project-setup 2.1
+ */
+public class SimpleColorSorter {
 
 	private static RegulatedMotor bigMotor;
 	private static RegulatedMotor smallMotor;

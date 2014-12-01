@@ -117,6 +117,7 @@ public class AdvancedColorSorter extends Thread {
 	}
 
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void interrupt() {
 		interruptCheck = true;

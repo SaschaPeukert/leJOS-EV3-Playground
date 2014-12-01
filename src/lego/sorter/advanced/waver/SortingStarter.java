@@ -14,6 +14,11 @@ import lejos.utility.Delay;
 import lego.sorter.advanced.AdvancedColorSorter;
 
 
+/**
+ * 
+ * The main class to run for project-setup 2.3
+ * 
+ */
 public class SortingStarter {
 	
 	private static RegulatedMotor bigMotor;
@@ -31,7 +36,6 @@ public class SortingStarter {
 		
 		waveMotor = new EV3LargeRegulatedMotor(MotorPort.D);
 		waveMotor.setSpeed(100);
-		//smallMotor.rotate(180);
 		
 		// get a port instance
 		Port port = LocalEV3.get().getPort("S2");
